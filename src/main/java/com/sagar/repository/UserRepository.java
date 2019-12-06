@@ -10,7 +10,7 @@ import java.util.List;
 // CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Query("select new User(u.name, u.email) from User  u")
+    @Query("select new User(u.fullName, u.email) from User  u")
     List<User> findData();
     User findByEmail(String email);
 }

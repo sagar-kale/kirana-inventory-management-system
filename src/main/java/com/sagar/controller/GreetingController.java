@@ -30,7 +30,7 @@ public class GreetingController {
         User user = new User();
         user.setEmail("abc@abc.com");
         user.setAddress(messageSource.getMessage("sunflower", null, locale));
-        user.setName(name);
+        user.setFullName(name);
         userRepository.save(user);
         return "redirect:/greeting";
     }

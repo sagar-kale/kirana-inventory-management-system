@@ -12,9 +12,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String name;
+    private String fullName;
 
     private String email;
+
+    private String password;
 
     private String address;
 
@@ -26,12 +28,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -42,8 +44,8 @@ public class User {
         this.email = email;
     }
 
-    public User(String name, String email) {
-        this.name = name;
+    public User(String fullName, String email) {
+        this.fullName = fullName;
         this.email = email;
     }
 
@@ -56,5 +58,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
