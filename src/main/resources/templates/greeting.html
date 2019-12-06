@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="mr">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" charset="UTF-8" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p th:if="${name}" th:text="'Hello, ' + ${name} + '!'"/>
+<div th:if="${users != null}">
+    <table>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.address}"></td>
+        </tr>
+    </table>
+</div>
+<span th:text="${#httpServletRequest.getHeader('User-Agent')}"></span>
+</body>
+</html>

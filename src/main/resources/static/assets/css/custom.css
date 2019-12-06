@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Shivaji02';
+    src: url("../../font/Shivaji02.ttf") format('truetype')}
+
+.marathi_text {
+    font-family: Shivaji02 !important;
+    font-size: 25px !important;}

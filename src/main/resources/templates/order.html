@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{user_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment order</title>
+    <script>
+        $(document).ready(function () {
+            // Handler for .ready() called.
+
+            $('html, body').animate({
+                scrollTop: $('#order').offset().top
+            }, 'slow');
+        });
+
+    </script>
+</head>
+<body>
+<section id="order" class="text-left" layout:fragment="content">
+    <!--Grid row-->
+    <!-- Heading -->
+    <h2 class="mb-5 font-weight-bold text-center">Register</h2>
+    <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="view overlay z-depth-1-half">
+                <h4 class="my-4 font-weight-bold">Order Validations</h4>
+                <!--<div th:errors="${user.*}">...</div>-->
+                <ul class="text-left">
+                    <li>Enter Amount greater than 9 .</li>
+                    <strong class="text-danger">
+                        <li th:if="${broke != null}" th:text="${broke}">
+                    </strong></li></strong>
+                </ul>
+                <div class="mask rgba-white-slight"></div>
+            </div>
+
+
+        </div>
+
+        <!--Grid column-->
+        <div class="col-lg-8 col-md-6 mb-4">
+            <div class="view overlay z-depth-1-half">
+                <!-- Default form register -->
+                <form action="#" th:action="@{/order}" th:object="${paymentOrder}"
+                      class="border border-light p-5" method="post"><p class="h4 mb-4">
+                    Order Info</p>
+
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <!-- First name -->
+                            <input th:field="*{name}"
+                                   id="orderName"
+                                   placeholder="Name"
+                                   class="form-control"
+                                   aria-describedby="orderNamehelpBlock" required="required"/>
+                            <!-- th:classappend="${#fields.hasErrors('name')}? 'alert alert-danger'"
+                             placeholder="Name"
+                             th:attr="placeholder=${#fields.hasErrors('name')}? ${#fields.errors('name')} : Name"
+                            -->
+                            <small id="orderNamehelpBlock" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                   class="form-text text-muted mb-4 al font-weight-bold text-danger">
+                                Name error
+                            </small>
+
+                            <!--<p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Invalid</p>-->
+                            <!--<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger font-weight-bold">
+                                Invalid Name
+                            </label>-->
+                        </div>
+                        <!--<div class="col">
+                            &lt;!&ndash; Last name &ndash;&gt;
+                            <input type="text" th:field="*{lastName}" name="lastName"
+                                   id="defaultRegisterFormLastName"
+                                   class="form-control" placeholder="Last name">
+                        </div>-->
+                    </div>
+
+                    <!-- E-mail -->
+                    <input type="email" th:field="*{email}" id="defaultOrderFormEmail"
+                           class="form-control mb-4"
+                           placeholder="E-mail" aria-describedby="orderEmailHelp" required="required"/>
+                    <small id="orderEmailHelp" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                           class="form-text text-muted mb-4 al font-weight-bold text-danger">
+                        Email error
+                    </small>
+
+                    <!-- Phone Number  -->
+                    <input type="text" th:field="*{phone}" id="defaultOrderFormPhone"
+                           class="form-control mb-4"
+                           placeholder="Phone Number" aria-describedby="orderPhoneHelp" required="required"
+                           maxlength="10"/>
+                    <small id="orderPhoneHelp" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+                           class="form-text text-muted mb-4 al font-weight-bold text-danger">
+                        Email error
+                    </small>
+
+                    <!-- amount -->
+                    <input type="text" th:field="*{amount}" id="orderAmount"
+                           class="form-control"
+                           placeholder="Order Amount" aria-describedby="orderAmountHelp" required="required"/>
+                    <small id="orderAmountHelp" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"
+                           class="form-text text-muted mb-4 al font-weight-bold text-danger">
+                        Amount error
+                    </small>
+
+                    <!-- Sign up button -->
+                    <button class="btn btn-info my-4 btn-block" type="submit">Place Order</button>
+
+                    <hr>
+
+                    <!-- Terms of service -->
+                    <p>By clicking
+                        <em>Place Order</em> you agree to our
+                        <a href="" target="_blank">terms of service</a> and
+                        <a href="" target="_blank">terms of conditions</a>. </p>
+
+                </form>
+                <!-- Default form register -->
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">User Home</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+
+<!--Main Navigation-->
+<header>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+        <div class="container">
+
+            <!-- Navbar brand -->
+            <a class="navbar-brand" href="#">Payment Gateway</a>
+
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                    aria-controls="basicExampleNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto smooth-scroll">
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize" href="#">Welcome <span
+                                th:text="${#authentication.principal.firstName+' '+#authentication.principal.lastName}"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#order" th:href="@{/order}">Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#order" th:href="@{/chat}" target="_blank">Online Chat</a>
+                    </li>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" th:href="@{/admin/}">Admin</a>
+                        </li>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <!-- Links -->
+
+                <!-- Social Icon  -->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://facebook.com/sgrkale143"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://instagram.com/sgrkale"><i class="fa fa-instagram"></i></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav mr-auto smooth-scroll">
+                    <form class="form-inline" th:action="@{/logout}" method="post">
+                        <button class="btn btn-link my-2 my-sm-0 logout-btn" type="submit">Logout</button>
+                    </form>
+                </ul>
+            </div>
+            <!-- Collapsible content -->
+
+        </div>
+    </nav>
+    <!--Mask-->
+    <div id="intro" class="view">
+
+        <div class="mask rgba-black-strong">
+
+            <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+                <div class="row d-flex justify-content-center text-center">
+
+                    <div class="col-md-10">
+
+                        <!-- Heading -->
+                        <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Payment Gateway</h2>
+
+                        <!-- Divider -->
+                        <hr class="hr-light">
+
+                        <!-- Description -->
+                        <h4 class="white-text my-4">Payment gateway designed by sagar kale.contact - 9561609535</h4>
+                        <button type="button" class="btn btn-outline-white">Read more<i class="fa fa-book ml-2"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!--/.Mask-->
+</header>
+<main class="mt-5">
+    <div class="container">
+        <!--Section: Examples-->
+        <section layout:fragment="content">
+            <p>Page content goes here</p>
+        </section>
+
+        <section id="contact">
+
+            <!-- Heading -->
+            <h2 class="mb-5 font-weight-bold text-center">Contact us</h2>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-5 col-md-12">
+
+                    <!-- Form contact -->
+                    <form class="p-5">
+
+                        <div class="md-form form-sm"><i class="fa fa-user prefix grey-text"></i>
+                            <input type="text" id="form3" class="form-control form-control-sm">
+                            <label for="form3">Your name</label>
+                        </div>
+
+                        <div class="md-form form-sm"><i class="fa fa-envelope prefix grey-text"></i>
+                            <input type="text" id="form2" class="form-control form-control-sm">
+                            <label for="form2">Your email</label>
+                        </div>
+
+                        <div class="md-form form-sm"><i class="fa fa-tag prefix grey-text"></i>
+                            <input type="text" id="form32" class="form-control form-control-sm">
+                            <label for="form32">Subject</label>
+                        </div>
+
+                        <div class="md-form form-sm"><i class="fa fa-pencil prefix grey-text"></i>
+                            <textarea type="text" id="form8" class="md-textarea form-control form-control-sm"
+                                      rows="4"></textarea>
+                            <label for="form8">Your message</label>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary">Send <i class="fa fa-paper-plane-o ml-1"></i></button>
+                        </div>
+                    </form>
+                    <!-- Form contact -->
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-7 col-md-12">
+
+                    <!--Grid row-->
+                    <div class="row text-center">
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-12 mb-3">
+
+                            <p>
+                                <i class="fa fa-map fa-1x mr-2 grey-text"></i>Mumbai , MH 400708 , IN</p>
+
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6 mb-3">
+
+                            <p>
+                                <i class="fa fa-building fa-1x mr-2 grey-text"></i>Mon - Fri, 8:00-22:00</p>
+
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6 mb-3">
+
+                            <p>
+                                <i class="fa fa-phone fa-1x mr-2 grey-text"></i>+ 91 9561 609535</p>
+
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <!--Grid row-->
+
+                    <!--Google map-->
+                    <div id="map-container" class="z-depth-1-half map-container mb-5" style="height: 400px"></div>
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+        </section>
+        <!--Section: Contact-->
+    </div>
+</main>
+
+<!--Footer-->
+<footer class="page-footer font-small unique-color-dark pt-0">
+
+    <!-- Social buttons -->
+    <div class="primary-color">
+        <div class="container">
+            <!--Grid row-->
+            <div class="row py-4 d-flex align-items-center">
+
+                <!--Grid column-->
+                <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                    <h6 class="mb-0 white-text">Get connected with us on social networks!</h6>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 col-lg-7 text-center text-md-right">
+                    <!--Facebook-->
+                    <a class="fb-ic ml-0">
+                        <i class="fa fa-facebook white-text mr-4"> </i>
+                    </a>
+                    <!--Twitter-->
+                    <a class="tw-ic">
+                        <i class="fa fa-twitter white-text mr-4"> </i>
+                    </a>
+                    <!--Google +-->
+                    <a class="gplus-ic">
+                        <i class="fa fa-google-plus white-text mr-4"> </i>
+                    </a>
+                    <!--Linkedin-->
+                    <a class="li-ic">
+                        <i class="fa fa-linkedin white-text mr-4"> </i>
+                    </a>
+                    <!--Instagram-->
+                    <a class="ins-ic">
+                        <i class="fa fa-instagram white-text mr-lg-4"> </i>
+                    </a>
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+        </div>
+    </div>
+    <!-- Social buttons -->
+
+    <!--Footer Links-->
+    <div class="container mt-5 mb-4 text-center text-md-left">
+        <div class="row mt-3">
+
+            <!--First column-->
+            <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Payment Gateway</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>Sooner we will expanding more</p>
+            </div>
+            <!--/.First column-->
+
+            <!--Second column-->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Products</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a href="#!">Recharge Gateway</a>
+                </p>
+                <p>
+                    <a href="#!">Sms Gateway</a>
+                </p>
+                <p>
+                    <a href="#!">Payment</a>
+                </p>
+                <p>
+                    <a href="#!">Social</a>
+                </p>
+            </div>
+            <!--/.Second column-->
+
+            <!--Third column-->
+            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Useful links</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <a href="#!">Your Account</a>
+                </p>
+                <p>
+                    <a href="#!">Become an Affiliate</a>
+                </p>
+                <p>
+                    <a href="#!">Shipping Rates</a>
+                </p>
+                <p>
+                    <a href="#!">Help</a>
+                </p>
+            </div>
+            <!--/.Third column-->
+
+            <!--Fourth column-->
+            <div class="col-md-4 col-lg-3 col-xl-3">
+                <h6 class="text-uppercase font-weight-bold">
+                    <strong>Contact</strong>
+                </h6>
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <p>
+                    <i class="fa fa-home mr-3"></i> Mumbai, MH 400708, IN</p>
+                <p>
+                    <i class="fa fa-envelope mr-3"></i> sagark.kale@hotmail.com</p>
+                <p>
+                    <i class="fa fa-phone mr-3"></i> + 91 95 6160 9535</p>
+                <p>
+                    <i class="fa fa-print mr-3"></i> + 91 95 6160 9535</p>
+            </div>
+            <!--/.Fourth column-->
+
+        </div>
+    </div>
+    <!--/.Footer Links-->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+        © 2018 Copyright:
+        <a href="#"> SagarKale.com</a>
+    </div>
+    <!--/.Copyright-->
+
+</footer>
+<!--/.Footer-->
+
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+
+<!--Google Maps-->
+<script src="https://maps.google.com/maps/api/js"></script>
+
+<!-- Google Maps settings -->
+<script>
+    // Regular map
+    function regular_map() {
+        var var_location = new google.maps.LatLng(40.725118, -73.997699);
+
+        var var_mapoptions = {
+            center: var_location,
+            zoom: 14
+        };
+
+        var var_map = new google.maps.Map(document.getElementById("map-container"),
+            var_mapoptions);
+
+        var var_marker = new google.maps.Marker({
+            position: var_location,
+            map: var_map,
+            title: "New York"
+        });
+    }
+
+    // Initialize maps
+    google.maps.event.addDomListener(window, 'load', regular_map);
+
+
+</script>
+
+<!-- Carousel options -->
+<script>
+    $('.carousel').carousel({
+        interval: 3000,
+    });
+
+
+</script>
+</body>
+
+</html>

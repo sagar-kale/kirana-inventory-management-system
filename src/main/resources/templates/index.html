@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="mr">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" charset="UTF-8" content="text/html; charset=UTF-8" />
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+</head>
+<body>
+    <form method="post" th:action="@{/greeting}">
+    Name: <input type="text" name="name"/>
+        <h2 class="marathi_text">saagar ha mast Aaho</h2>
+        <input type="hidden" th:value="mr" name="lang">
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>
