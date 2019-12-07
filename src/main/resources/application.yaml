@@ -1,0 +1,100 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/
+
+logging:
+  level:
+    org.springframework.web: error
+    org.hibernate: debug
+    org.apache.http: error
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+      enabled: true
+  messages.basename: validation
+  thymeleaf.cache: false
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        show_sql: false
+        #type: trace
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  messages:
+    use-code-as-default-message: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+cloudinary:
+  cloud_name: sgrkale
+  api_key: 423365436679876
+  api_secret: lc9l1fKrtifRCquCezCUSbGOLTQ
+
+jasypt:
+  encryptor:
+    password: ${APP_ENCRYPTION_PASSWORD}
+    property:
+      prefix: SGR(
+
+
+---
+spring:
+  profiles: mysql
+  datasource:
+    url: "jdbc:mysql://${MYSQL_HOST:localhost}:3306/kirana_shop_db"
+    driver-class-name: com.mysql.jdbc.Driver
+    username: SGR(46XouROSms9c5YhAYdON8g==)
+    password: SGR(FJTGVA85VBjS9W2hWvIkMA==)
+---
+spring:
+  profiles: postgres
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    driver-class-name: com.mysql.jdbc.Driver
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.ProgressDialect
+---
+spring:
+  profiles: errorlogs
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        show_sql: false
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false
+    show-sql: false
+  messages:
+    basename: validation
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    org.springframework.web: error
+    org.hibernate: error
+    org.apache.http: error
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

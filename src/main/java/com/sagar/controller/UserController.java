@@ -1,11 +1,14 @@
 package com.sagar.controller;
 
 import com.sagar.entity.User;
+import com.sagar.model.Response;
 import com.sagar.repository.UserRepository;
+import com.sagar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.midi.Soundbank;
 import java.util.List;
 
 @CrossOrigin
@@ -13,18 +16,18 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping(value = "/add")
-    public User addUser(@RequestBody User user) {
+    public ResponseEntity<Response> addUser(@RequestBody User user) {
         System.out.println(user.getFullName());
-        if (user == null)
-            return user;
-        return userRepository.save(user);
+        Response response = userService.saveUser(user);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
     @GetMapping
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<Response> findAllUsers() {
+        Response allUsers = userService.findAllUsers();
+        return new ResponseEntity<>(allUsers, allUsers.getStatus());
     }
 }
