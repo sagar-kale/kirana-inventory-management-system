@@ -1,6 +1,5 @@
 package com.sagar.exceptions;
 
-import com.sagar.controller.GreetingController;
 import com.sagar.model.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(basePackages = "{com.sagar.controller}")
+@ControllerAdvice(basePackages = "com.sagar.controller")
 public class GenericControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
@@ -20,6 +19,7 @@ public class GenericControllerAdvice extends ResponseEntityExceptionHandler {
         HttpStatus status = getStatus(request);
         return new ResponseEntity<>(new Response(status.value(), ex.getMessage()), status);
     }
+
 
     private HttpStatus getStatus(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");

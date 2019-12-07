@@ -30,7 +30,7 @@ spring:
     hibernate:
       ddl-auto: update
   messages:
-    use-code-as-default-message: true
+    basename: messages
 
 
 management:
@@ -55,7 +55,7 @@ spring:
   profiles: mysql
   datasource:
     url: "jdbc:mysql://${MYSQL_HOST:localhost}:3306/kirana_shop_db"
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: SGR(46XouROSms9c5YhAYdON8g==)
     password: SGR(FJTGVA85VBjS9W2hWvIkMA==)
 ---
@@ -83,8 +83,6 @@ spring:
       ddl-auto: update
     generate-ddl: false
     show-sql: false
-  messages:
-    basename: validation
   thymeleaf:
     cache: false
 
