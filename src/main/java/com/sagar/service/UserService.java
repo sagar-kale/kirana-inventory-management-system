@@ -56,19 +56,29 @@ public class UserService {
     }
 
     public Response login(User user) {
-        userResponse = new Response<LoggedUser>();
+        Response<LoggedUser> response = new Response<>();
+        response.setStatus(HttpStatus.FORBIDDEN);
+        response.setStatusCode(HttpStatus.FORBIDDEN.value());
+        response.setError(true);
+
+        if (user.getEmail() == null) {
+            response.setErrMessage("Enter Email and Password");
+            return response;
+        }
 
         User byEmail = userRepository.findByEmail(user.getEmail());
+
         if (null == byEmail) {
-            userResponse.setStatus(HttpStatus.FORBIDDEN);
-            userResponse.setError(true);
-            userResponse.setErrMessage("Invalid User Name and Password");
-            return userResponse;
+            response.setErrMessage("Invalid User Name and Password");
+            return response;
+        } else if (byEmail.getPassword().equals(user.getPassword())) {
+            response.setError(false);
+            response = Utils.buildSuccessResponse(response);
+            response.setEntity(new LoggedUser(true, byEmail));
+            return response;
         }
-        userResponse.setStatus(HttpStatus.OK);
-        userResponse.setSuccess(true);
-        userResponse.setEntities(userRepository.findAll());
-        return userResponse;
+        response.setErrMessage("Invalid Password");
+        return response;
     }
 
     public User findByUsername(String email) {

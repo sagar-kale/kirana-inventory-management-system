@@ -31,6 +31,8 @@ spring:
       ddl-auto: update
   messages:
     basename: messages
+  jackson:
+    date-format: yyyy-MM-dd
 
 
 management:

@@ -6,6 +6,8 @@
 
 This [Spring Boot](http://projects.spring.io/spring-boot/) app is developed for kirana shop. it is multilingual app.
 ## Description
+Get paginated Products GET /products?page=0&size=2&sort=createdAt,desc
+
 Included Languages
 - Marathi , lang code -  [mr](https://en.wikipedia.org/wiki/Marathi_language)
 ## Requirements

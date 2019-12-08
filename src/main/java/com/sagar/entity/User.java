@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.Valid;
 
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity // This tells Hibernate to make a table out of this class
@@ -17,7 +16,7 @@ import javax.validation.Valid;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class User {
+public class User extends CommonFields {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -30,6 +29,7 @@ public class User {
 
     private String address;
     private String repeatPassword;
+
 
     public User(String fullName, String email) {
         this.fullName = fullName;

@@ -5,6 +5,7 @@ import com.sagar.model.Response;
 import com.sagar.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Locale;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RestController
 @RequestMapping("/users")
 @Slf4j
@@ -24,7 +25,7 @@ public class UserController {
     public ResponseEntity<Response> addUser(@Valid @RequestBody User user, BindingResult bindingResult, Locale locale) {
         log.info("adding user :: {}", user);
         Response response = userService.saveUser(user, bindingResult, locale);
-        return new ResponseEntity<>(response, response.getStatus());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping
@@ -35,6 +36,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<Response> login(@RequestBody User user) {
-        return null;
+        Response response = userService.login(user);
+        return ResponseEntity.ok(response);
     }
 }
