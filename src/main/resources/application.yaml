@@ -6,7 +6,7 @@ server:
 logging:
   level:
     org.springframework.web: error
-    org.hibernate: debug
+    org.hibernate: error
     org.apache.http: error
 
 
@@ -21,9 +21,9 @@ spring:
   jpa:
     properties:
       hibernate:
-        format_sql: false
+        format_sql: true
         use_sql_comments: false
-        show_sql: false
+        show_sql: true
         #type: trace
     generate-ddl: false
     show-sql: true
@@ -55,6 +55,8 @@ jasypt:
 ---
 spring:
   profiles: mysql
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
     url: "jdbc:mysql://${MYSQL_HOST:localhost}:3306/kirana_shop_db"
     driver-class-name: com.mysql.cj.jdbc.Driver
