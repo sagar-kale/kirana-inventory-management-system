@@ -22,9 +22,11 @@ public class Response<T> {
     private List<T> entities;
     private boolean isSuccess = false;
     private Map<String, String> validationErrors;
+    private String msg;
 
-    public Response(Integer statusCode, String errMessage) {
+    public Response(Integer statusCode, String errMessage, boolean isError) {
         this.statusCode = statusCode;
         this.errMessage = errMessage;
+        this.isError = isError;
     }
 }

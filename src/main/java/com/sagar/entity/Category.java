@@ -1,17 +1,22 @@
 package com.sagar.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 public class Category extends CommonFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String categoryName;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
-    Set<Product> products;
 }

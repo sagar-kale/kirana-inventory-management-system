@@ -17,7 +17,7 @@ public class GenericControllerAdvice extends ResponseEntityExceptionHandler {
     @ResponseBody
     ResponseEntity<?> handleControllerException(HttpServletRequest request, Throwable ex) {
         HttpStatus status = getStatus(request);
-        return new ResponseEntity<>(new Response(status.value(), ex.getMessage()), status);
+        return new ResponseEntity<>(new Response(status.value(), ex.getMessage(), true), status);
     }
 
 
