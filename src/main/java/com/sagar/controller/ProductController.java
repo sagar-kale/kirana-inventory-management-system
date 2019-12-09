@@ -1,7 +1,10 @@
 package com.sagar.controller;
 
+import com.sagar.entity.Measurement;
 import com.sagar.entity.Product;
+import com.sagar.exceptions.ResourceNotFoundException;
 import com.sagar.model.Response;
+import com.sagar.repository.MeasurementRepository;
 import com.sagar.service.ProductService;
 import com.sagar.utils.Utils;
 import com.sagar.validators.ProductValidator;
@@ -9,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,9 @@ public class ProductController {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    private MeasurementRepository measurementRepository;
 
     @GetMapping
     public List<Product> findAllProducts() {
@@ -61,6 +68,37 @@ public class ProductController {
         Response response = productService.deleteProduct(id, locale);
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * Measurement Methods Starts from Here
+     **/
+
+    @GetMapping("/measurements")
+    public Page<Measurement> getAllPosts(Pageable pageable) {
+        return measurementRepository.findAll(pageable);
+    }
+
+    @PostMapping("/measurement")
+    public Measurement createMeasurement(@RequestBody @Valid Measurement measurement) {
+        return measurementRepository.save(measurement);
+    }
+
+    @PutMapping("/measurement/{measureId}")
+    public Measurement updatePost(@PathVariable Long measureId, @Valid @RequestBody Measurement measurement) {
+        return measurementRepository.findById(measureId).map(measure -> {
+            measure.setName(measurement.getName());
+            return measurementRepository.save(measure);
+        }).orElseThrow(() -> new ResourceNotFoundException("Measure Id " + measureId + " not found"));
+    }
+
+    @DeleteMapping("/measurement/{measureId}")
+    public ResponseEntity<?> deletePost(@PathVariable Long measureId) {
+        return measurementRepository.findById(measureId).map(post -> {
+            measurementRepository.delete(post);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException("Measure Id " + measureId + " not found"));
+    }
+
 
     private Response validateProduct(Product product, BindingResult bindingResult, Locale locale) {
         log.info("validating product :: {}", product);

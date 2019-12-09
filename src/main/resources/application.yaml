@@ -18,22 +18,10 @@ spring:
       enabled: true
   messages.basename: validation
   thymeleaf.cache: false
-  jpa:
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: false
-        show_sql: true
-        #type: trace
-    generate-ddl: false
-    show-sql: true
-    hibernate:
-      ddl-auto: update
   messages:
     basename: messages
   jackson:
     date-format: yyyy-MM-dd
-
 
 management:
   endpoints:
@@ -55,13 +43,16 @@ jasypt:
 ---
 spring:
   profiles: mysql
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
     url: "jdbc:mysql://${MYSQL_HOST:localhost}:3306/kirana_shop_db"
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: SGR(46XouROSms9c5YhAYdON8g==)
     password: SGR(FJTGVA85VBjS9W2hWvIkMA==)
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
 ---
 spring:
   profiles: postgres
@@ -80,21 +71,25 @@ spring:
   jpa:
     properties:
       hibernate:
-        format_sql: false
-        use_sql_comments: false
-        show_sql: false
-    hibernate:
-      ddl-auto: update
-    generate-ddl: false
-    show-sql: false
+        format_sql: true
+        use_sql_comments: true
+        show_sql: true
+        type: trace
+    show-sql: true
   thymeleaf:
     cache: false
 
 logging:
   level:
+    com.sagar: error
     org.springframework.web: error
     org.hibernate: error
     org.apache.http: error
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
 management:
   endpoints:
     web:
