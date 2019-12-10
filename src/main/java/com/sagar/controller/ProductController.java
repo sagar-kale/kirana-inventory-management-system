@@ -44,6 +44,11 @@ public class ProductController {
         return productService.findAll();
     }
 
+    @GetMapping("/exists")
+    public boolean isProductNameExists(@RequestParam("productName") String productName) {
+        return productService.isProductExist(productName);
+    }
+
     @PostMapping
     public ResponseEntity<Response<Product>> addProduct(@RequestBody @Valid Product product, BindingResult bindingResult, Locale locale) {
 
