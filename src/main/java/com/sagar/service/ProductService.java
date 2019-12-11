@@ -42,6 +42,10 @@ public class ProductService {
         return productRepository.findByCategoryId(categoryId, pageable);
     }
 
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
     public Response saveProduct(Product product, Locale locale) {
         log.info("adding product :: {}", product);
         productResponse = new Response<>();

@@ -22,7 +22,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*",
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.DELETE,
+                RequestMethod.HEAD,
+                RequestMethod.PUT,
+                RequestMethod.POST})
 @RestController
 @RequestMapping("/product")
 @Slf4j
@@ -42,6 +49,11 @@ public class ProductController {
     @GetMapping
     public List<Product> findAllProducts() {
         return productService.findAll();
+    }
+
+    @GetMapping(value = "/{id}")
+    public Product findProductById(@PathVariable Long id) {
+        return productService.getProductById(id).orElseThrow(() -> new ResourceNotFoundException("Product ID " + id + " not found"));
     }
 
     @GetMapping("/exists")
