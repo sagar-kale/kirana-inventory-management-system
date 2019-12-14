@@ -43,6 +43,9 @@ public class CategoryService {
     public boolean isCategoryNameAlreadyExists(String categoryName) {
         return categoryRepository.existsByCategoryNameIgnoreCase(categoryName);
     }
+    public Optional<Category> findCategoryById(Long id){
+        return categoryRepository.findById(id);
+    }
 
     public Response deleteCategory(Long id, Locale locale) {
         categoryResponse = new Response<>();

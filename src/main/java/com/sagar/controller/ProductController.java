@@ -1,10 +1,13 @@
 package com.sagar.controller;
 
+import com.sagar.entity.Category;
 import com.sagar.entity.Measurement;
 import com.sagar.entity.Product;
 import com.sagar.exceptions.ResourceNotFoundException;
 import com.sagar.model.Response;
 import com.sagar.repository.MeasurementRepository;
+import com.sagar.repository.ProductRepository;
+import com.sagar.service.CategoryService;
 import com.sagar.service.ProductService;
 import com.sagar.utils.Utils;
 import com.sagar.validators.ProductValidator;
@@ -44,6 +47,12 @@ public class ProductController {
     private MessageSource messageSource;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
     private MeasurementRepository measurementRepository;
 
     @GetMapping
@@ -70,6 +79,28 @@ public class ProductController {
         log.info("validation succeed");
         Response response = productService.saveProduct(product, locale);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<?> updatePost(@PathVariable Long productId, @Valid @RequestBody Product product, BindingResult bindingResult, Locale locale) {
+        String pName = product.getProductName();
+        product.setProductName("TEST");
+        Response response = validateProduct(product, bindingResult, locale);
+        product.setProductName(pName);
+        if (response != null) {
+            return ResponseEntity.ok(response);
+        }
+        return productService.getProductById(productId).map(p -> {
+            p.setProductName(product.getProductName());
+            p.setMeasure(product.getMeasure());
+            Category category = categoryService.findCategoryById(product.getCatId()).orElseThrow(() -> new ResourceNotFoundException("Category Id " + product.getCatId() + " not found"));
+            p.setCategory(category);
+            p.setPurchasePrice(product.getPurchasePrice());
+            p.setSalePrice(product.getSalePrice());
+            p.setDescription(product.getDescription());
+            p.setQty(product.getQty());
+            return ResponseEntity.ok(productRepository.save(p   ));
+        }).orElseThrow(() -> new ResourceNotFoundException("Product Id " + productId + " not found"));
     }
 
     @DeleteMapping(value = "{id}")
@@ -130,4 +161,5 @@ public class ProductController {
         }
         return null;
     }
+
 }
