@@ -38,4 +38,10 @@ public class Product extends CommonFields {
     @JsonProperty(value = "desc")
     private String description;
     private String measure;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Customer customer;
+    @Transient
+    private String custName;
 }

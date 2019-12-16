@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*",
+@CrossOrigin(origins = "*", allowedHeaders = "*",
         methods = {
                 RequestMethod.OPTIONS,
                 RequestMethod.GET,
@@ -72,7 +72,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Response<Product>> addProduct(@RequestBody @Valid Product product, BindingResult bindingResult, Locale locale) {
-
+        System.out.println(product);
         Response errResponse = validateProduct(product, bindingResult, locale);
         if (errResponse != null)
             return ResponseEntity.ok(errResponse);

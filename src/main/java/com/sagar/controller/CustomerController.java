@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/customers")
 @Slf4j
@@ -37,6 +37,7 @@ public class CustomerController {
     public Customer updatePost(@PathVariable Long customerId, @Valid @RequestBody Customer customerReq) {
         return customerRepository.findById(customerId).map(customer -> {
             customer.setName(customerReq.getName());
+            customer.setEmail(customerReq.getEmail());
             customer.setAddress(customerReq.getAddress());
             customer.setPhone(customerReq.getPhone());
             customer.setCreatedAt(customer.getCreatedAt());

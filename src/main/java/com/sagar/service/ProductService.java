@@ -1,9 +1,11 @@
 package com.sagar.service;
 
 import com.sagar.entity.Category;
+import com.sagar.entity.Customer;
 import com.sagar.entity.Product;
 import com.sagar.model.Response;
 import com.sagar.repository.CategoryRepository;
+import com.sagar.repository.CustomerRepository;
 import com.sagar.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class ProductService {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     private Response<Product> productResponse = null;
 
     public List<Product> findAll() {
@@ -50,12 +55,14 @@ public class ProductService {
         log.info("adding product :: {}", product);
         productResponse = new Response<>();
         Optional<Category> category = categoryRepository.findById(product.getCatId());
-        if (!category.isPresent()) {
+        Optional<Customer> customer = customerRepository.findById(product.getCustomer().getId());
+        if (!category.isPresent() && !customer.isPresent()) {
             productResponse.setError(true);
             productResponse.setErrMessage(messageSource.getMessage("cat.not.found", null, locale));
             return productResponse;
         }
         product.setCategory(category.get());
+        product.setCustomer(customer.get());
         Product save = productRepository.save(product);
 
         productResponse.setSuccess(true);

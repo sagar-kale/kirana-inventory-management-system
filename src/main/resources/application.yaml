@@ -82,9 +82,9 @@ spring:
 logging:
   level:
     com.sagar: error
-    org.springframework.web: error
+    org.springframework.web: debug
     org.hibernate: error
-    org.apache.http: error
+    org.apache.http: debug
     org:
       hibernate:
         type:

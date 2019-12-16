@@ -28,6 +28,10 @@ public class ProductValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "purchasePrice", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "salePrice", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "catId", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "customer", "NotEmpty");
+        if (product.getCustomer() == null) {
+            errors.rejectValue("customer", "cat.not.found");
+        }
 
         if (product.getProductName() != null && productService.isProductExist(product.getProductName())) {
             errors.rejectValue("productName", "product.name.exist");
