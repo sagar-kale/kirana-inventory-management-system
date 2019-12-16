@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,7 +41,15 @@ public class CustomerController {
             customer.setPhone(customerReq.getPhone());
             customer.setCreatedAt(customer.getCreatedAt());
             return customerRepository.save(customer);
-        }).orElseThrow(() -> new ResourceNotFoundException("PostId " + customerId + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("customerId " + customerId + " not found"));
+    }
+
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<?> deletePost(@PathVariable Long customerId) {
+        return customerRepository.findById(customerId).map(post -> {
+            customerRepository.delete(post);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException("customerId " + customerId + " not found"));
     }
 
     @GetMapping("/exists/{customerId}")
