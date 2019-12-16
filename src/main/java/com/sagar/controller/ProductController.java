@@ -99,7 +99,7 @@ public class ProductController {
             p.setSalePrice(product.getSalePrice());
             p.setDescription(product.getDescription());
             p.setQty(product.getQty());
-            return ResponseEntity.ok(productRepository.save(p   ));
+            return ResponseEntity.ok(productRepository.save(p));
         }).orElseThrow(() -> new ResourceNotFoundException("Product Id " + productId + " not found"));
     }
 
