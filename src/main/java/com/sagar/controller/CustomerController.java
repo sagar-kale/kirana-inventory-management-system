@@ -57,4 +57,9 @@ public class CustomerController {
         return customerRepository.existsById(customerId);
     }
 
+    @GetMapping(value = "/{id}")
+    public Customer findCustomerById(@PathVariable Long id) {
+        return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer ID " + id + " not found"));
+    }
+
 }
