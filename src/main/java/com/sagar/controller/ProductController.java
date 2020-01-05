@@ -155,7 +155,7 @@ public class ProductController {
         if (miscFromDB.isPresent()) {
             Misc misc1 = miscFromDB.get();
             misc1.setTotalProfit(misc1.getTotalProfit().add(misc.getTotalProfit()));
-            misc1.setTotalLoss(misc1.getTotalLoss().add(misc.getTotalLoss()));
+            misc1.setTotalLoss(misc1.getTotalLoss().add(misc.getTotalLoss()).subtract(misc1.getTotalProfit()));
             miscRepository.save(misc1);
         } else {
             miscRepository.save(misc);
