@@ -1,11 +1,11 @@
 package com.sagar.controller;
 
-import com.sagar.entity.Category;
-import com.sagar.entity.Measurement;
-import com.sagar.entity.Product;
+import com.sagar.entity.*;
 import com.sagar.exceptions.ResourceNotFoundException;
 import com.sagar.model.Response;
 import com.sagar.repository.MeasurementRepository;
+import com.sagar.repository.MiscRepository;
+import com.sagar.repository.OrderRepository;
 import com.sagar.repository.ProductRepository;
 import com.sagar.service.CategoryService;
 import com.sagar.service.ProductService;
@@ -21,9 +21,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*",
         methods = {
@@ -54,6 +56,11 @@ public class ProductController {
 
     @Autowired
     private MeasurementRepository measurementRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private MiscRepository miscRepository;
 
     @GetMapping
     public List<Product> findAllProducts() {
@@ -130,6 +137,32 @@ public class ProductController {
     public Measurement createMeasurement(@RequestBody @Valid Measurement measurement) {
         return measurementRepository.save(measurement);
     }
+
+    @PostMapping("/order")
+    public Order createMeasurement(@RequestBody @Valid Order order) {
+        Misc misc = new Misc();
+        Product product = productRepository.findById(order.getProduct().getId()).get();
+        if (order.getType() == Type.PURCHASE) {
+            misc.setTotalLoss(order.getTotalAmount());
+            product.setQty(product.getQty() + order.getProduct().getQty());
+            productRepository.save(product);
+        } else {
+            misc.setTotalProfit(order.getProduct().getSalePrice().multiply(BigDecimal.valueOf(order.getProduct().getQty())).subtract(order.getTotalAmount()));
+            product.setQty(product.getQty() - order.getProduct().getQty());
+            productRepository.save(product);
+        }
+        Optional<Misc> miscFromDB = miscRepository.findById(1L);
+        if (miscFromDB.isPresent()) {
+            Misc misc1 = miscFromDB.get();
+            misc1.setTotalProfit(misc1.getTotalProfit().add(misc.getTotalProfit()));
+            misc1.setTotalLoss(misc1.getTotalLoss().add(misc.getTotalLoss()));
+            miscRepository.save(misc1);
+        } else {
+            miscRepository.save(misc);
+        }
+        return orderRepository.save(order);
+    }
+
 
     @PutMapping("/measurement/{measureId}")
     public Measurement updatePost(@PathVariable Long measureId, @Valid @RequestBody Measurement measurement) {

@@ -14,14 +14,8 @@ public class Order extends CommonFields {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal totalAmount;
-    private BigDecimal totalProfit;
-    private BigDecimal totalLoss;
     @Enumerated(EnumType.STRING)
-    private Type type;
+    public Type type;
     @OneToOne
     private Product product;
-
-    enum Type {
-        PURCHASE, SALE
-    }
 }
